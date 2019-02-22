@@ -1,4 +1,4 @@
-package com.example.gudrun.restaurantguide;
+package com.example.aydan.resturantguidefinal;
 
 import android.Manifest;
 import android.app.Activity;
@@ -178,3 +178,4 @@ public class GpsTracker extends Service implements LocationListener {
         return null;
     }
 }
+
