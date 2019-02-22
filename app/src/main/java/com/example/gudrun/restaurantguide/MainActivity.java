@@ -1,6 +1,7 @@
-package com.example.gudrun.restaurantguide;
+package com.example.aydan.resturantguidefinal;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setTitle("Restaurant Guide");
+        getSupportActionBar().setSubtitle("HomePage");
         try {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         spinner = findViewById(R.id.idspinner);
-        String[] distancevalues = {"15000", "20000", "30000"};
+        String[] distancevalues = {"1000", "5000","10000", "15000"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, distancevalues);
         spinner.setAdapter(adapter);
         int value = Integer.parseInt((String) spinner.getSelectedItem());
@@ -83,11 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         final int radius = Integer.parseInt((String) spinner.getSelectedItem());
 
-        Log.e("Longitude: ", String.valueOf(pLong));
-        Log.e("Latitude: ", String.valueOf(pLat));
-        Log.e("Radius: ", String.valueOf(radius));
-
-        //  new NetworkAsyncTask().execute();
+             //  new NetworkAsyncTask().execute();
         final NetworkAsyncTask httpsTask = new NetworkAsyncTask(radius, pLong, pLat);
         httpsTask.execute();
         new Thread(new Runnable() {
@@ -145,4 +144,3 @@ public class MainActivity extends AppCompatActivity {
 }
 
 //TODO - set the put request and store result in a file.
-
