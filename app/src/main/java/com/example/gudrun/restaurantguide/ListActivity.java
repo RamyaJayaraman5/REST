@@ -1,12 +1,14 @@
-package com.example.gudrun.restaurantguide;
+package com.example.aydan.resturantguidefinal;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class ListActivity extends AppCompatActivity {
 
+    ImageView needle;
     ListView lv;
     //String[] names={"value1","value2","value3","value4","value5"};
     NodeList restaurants;
@@ -37,10 +40,12 @@ public class ListActivity extends AppCompatActivity {
     double ownlat;
     double ownlon;
     int radius;
+    String hotelname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
         try {
             getSupportActionBar().setTitle("Restaurant Guide");
             getSupportActionBar().setSubtitle("List of NearBy Restaurants");
@@ -49,7 +54,6 @@ public class ListActivity extends AppCompatActivity {
             ownlat= getIntent().getDoubleExtra("ownlat", 0.0);
             ownlon= getIntent().getDoubleExtra("ownlon", 0.0);
             radius=getIntent().getIntExtra("radius",1500);
-
 
             System.out.println("nlString: " + nodeListString);
             String[] names =new String[10];
@@ -61,10 +65,6 @@ public class ListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
-
 
     private static String getValue(String tag, Element element) {
         NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
@@ -93,6 +93,7 @@ public class ListActivity extends AppCompatActivity {
                     //System.out.println("node: " + nNode.getAttributes());
                     Element eElement = (Element) nNode;
                     System.out.println("\nRestaurant Names : " + eElement.getElementsByTagName("name"));
+                   // hotelname=String.valueOf( eElement.getElementsByTagName("name"));
                     System.out.println("key : " + eElement.getAttribute("k"));
                     if(eElement.getAttribute("k").equals("name")) {
                         tmp.add(eElement.getAttribute("v"));
@@ -119,13 +120,22 @@ public class ListActivity extends AppCompatActivity {
                     Element item = (Element) sortedList.get(i);
                     double lat = Double.parseDouble(item.getAttribute("lat"));
                     double lon = Double.parseDouble(item.getAttribute("lon"));
+                    String name=lv.getItemAtPosition(i).toString();
+
                     Intent intent = new Intent(getApplicationContext(), Compass.class);
                     intent.putExtra("lat", lat);
                     intent.putExtra("lon", lon);
-                    intent.putExtra("ownlat",ownlat);
-                    intent.putExtra("ownlon", ownlon);
-                    intent.putExtra("radius", radius);
+                    intent.putExtra("name", name);
+
+                    //intent.putExtra("ownlat",ownlat);
+                    //intent.putExtra("ownlon", ownlon);
+                    //intent.putExtra("radius", radius);
                     startActivity(intent);
+                    //needle=findViewById(R.id.arrow);
+
+                    //new QiblaDirectionCompass(needle,lon,lat);
+
+
                 }
             });
         } catch (Exception e) {
@@ -134,4 +144,6 @@ public class ListActivity extends AppCompatActivity {
         return tmp;
     }
 }
+
+
 
