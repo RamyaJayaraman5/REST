@@ -1,5 +1,6 @@
-package com.example.gudrun.restaurantguide;
+package com.example.aydan.resturantguidefinal;
 
+import android.os.AsyncTask;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,7 +14,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-class NetworkAsyncTask extends AsyncTask  {
+class NetworkAsyncTask extends AsyncTask {
 
     private final int radius;
     private final double strlongitude;
@@ -80,4 +81,7 @@ class NetworkAsyncTask extends AsyncTask  {
     }
 
 }
+
+
+
 
